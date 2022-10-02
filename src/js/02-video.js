@@ -17,7 +17,7 @@ player.on(
   'timeupdate',
   throttle(function (data) {
     localStorage.setItem('videoplayer-current-time', JSON.stringify(data.seconds));
-  }, 1000)
+  }, wait=1000)
 );
 
 
@@ -29,6 +29,7 @@ console.log(savedTimeVideoParse);
 if (savedTimeVideoParse !== null) {
    player.setCurrentTime(savedTimeVideoParse)
 }
+
 
 
 // VAR 2 (тротл не працює у гіті)

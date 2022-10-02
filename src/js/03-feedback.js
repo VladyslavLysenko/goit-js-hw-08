@@ -11,9 +11,9 @@ function onChange(e) {
     email:email.value,
     message:message.value
     }
-    console.log(userInfo);
+   
     const userInfoJson = JSON.stringify(userInfo);
-    console.log(userInfoJson);
+    // console.log(userInfoJson);
     localStorage.setItem("feedback-form-state", userInfoJson);
 
 }
@@ -32,6 +32,28 @@ const getUserInfo = JSON.parse(getUserInfoJSON);
 // console.log(getUserInfo);
 
 
+
+
+
+
+form.addEventListener("submit", function (evt) {
+    evt.preventDefault()
+    
+    if (!email.value || !message.value) {
+     
+        alert("Заповніть поля")
+       
+    } else {
+        
+        console.log("submtited data:", localStorage.getItem("feedback-form-state"));
+        localStorage.removeItem("feedback-form-state");
+        email.value = "";
+        message.value = "";
+
+    }
+    
+
+})
 
 
 
