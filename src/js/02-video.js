@@ -3,14 +3,14 @@ let throttle = require('lodash.throttle');
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-// const onPlay = function (data) {
-//     // console.log(data.seconds);
-//     let savedTimeJSON = JSON.stringify(data.seconds)
-//     // console.log(savedTimeJSON);
+const onPlay = function (data) {
+    // console.log(data.seconds);
+    let savedTimeJSON = JSON.stringify(data.seconds)
+    // console.log(savedTimeJSON);
 
-//     localStorage.setItem("videoplayer-current-time", savedTimeJSON)
-//     // data is an object containing properties specific to that event
-// };
+    localStorage.setItem("videoplayer-current-time", savedTimeJSON)
+    // data is an object containing properties specific to that event
+};
 
 // player.on('timeupdate', throttle(onPlay, wait = 1000));
 player.on(
@@ -26,8 +26,8 @@ const savedTimeVideo = localStorage.getItem("videoplayer-current-time")
 const savedTimeVideoParse = JSON.parse(savedTimeVideo);
 console.log(savedTimeVideoParse);
 
-
-player.setCurrentTime(savedTimeVideoParse).then(function(seconds) {
+if (savedTimeVideoParse !== null) {
+   player.setCurrentTime(savedTimeVideoParse).then(function(seconds) {
     // seconds = the actual time that the player seeked to
 }).catch(function(error) {
     switch (error.name) {
@@ -40,6 +40,8 @@ player.setCurrentTime(savedTimeVideoParse).then(function(seconds) {
             break;
     }
 });
+ 
+}
 
 
 // VAR 2 (тротл не працює у гіті)
