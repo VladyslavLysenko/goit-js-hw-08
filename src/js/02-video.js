@@ -1,31 +1,71 @@
 import Player from '@vimeo/player';
-
-const player = new Player("vimeo-player") 
-
 let throttle = require('lodash.throttle');
+const iframe = document.querySelector('iframe');
+const player = new Player(iframe);
 
 const onPlay = function (data) {
+    // console.log(data.seconds);
+    let savedTimeJSON = JSON.stringify(data.seconds)
+    // console.log(savedTimeJSON);
+
+    localStorage.setItem("videoplayer-current-time", savedTimeJSON)
     // data is an object containing properties specific to that event
-    //  console.log('played the video!')
-    console.log(data);
-    
-    let timeJSON = JSON.stringify(data);
-    // console.log(timeJSON);
-    localStorage.setItem("videoplayer-current-time", timeJSON)
-    
 };
 
 player.on('timeupdate', throttle(onPlay, wait = 1000));
 
- const savedTimeVideo = localStorage.getItem("videoplayer-current-time")
+
+const savedTimeVideo = localStorage.getItem("videoplayer-current-time")
 // console.log(savedTimeVideo);
-
- const savedTimeVideoParse = JSON.parse(savedTimeVideo);
-
-if (savedTimeVideoParse !== null) {
+const savedTimeVideoParse = JSON.parse(savedTimeVideo);
 console.log(savedTimeVideoParse);
-player.setCurrentTime(savedTimeVideoParse.seconds)  
-}
+
+
+player.setCurrentTime(savedTimeVideoParse).then(function(seconds) {
+    // seconds = the actual time that the player seeked to
+}).catch(function(error) {
+    switch (error.name) {
+        case 'RangeError':
+            // the time was less than 0 or greater than the video’s duration
+            break;
+
+        default:
+            // some other error occurred
+            break;
+    }
+});
+
+
+// VAR 2 (тротл не працює у гіті)
+
+// import Player from '@vimeo/player';
+// import throttle from 'lodash.throttle';
+// const player = new Player("vimeo-player") 
+
+// let throttle = require('lodash.throttle');
+
+// const onPlay = function (data) {
+//     // data is an object containing properties specific to that event
+//     //  console.log('played the video!')
+//     console.log(data);
+    
+//     let timeJSON = JSON.stringify(data);
+//     // console.log(timeJSON);
+//     localStorage.setItem("videoplayer-current-time", timeJSON)
+    
+// };
+
+// player.on('timeupdate', throttle(onPlay, wait = 1000));
+
+//  const savedTimeVideo = localStorage.getItem("videoplayer-current-time")
+// // console.log(savedTimeVideo);
+
+//  const savedTimeVideoParse = JSON.parse(savedTimeVideo);
+
+// if (savedTimeVideoParse !== null) {
+// console.log(savedTimeVideoParse);
+// player.setCurrentTime(savedTimeVideoParse.seconds)  
+// }
 
 
 
