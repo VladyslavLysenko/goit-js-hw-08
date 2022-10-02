@@ -2,6 +2,8 @@ import Player from '@vimeo/player';
 
 const player = new Player("vimeo-player") 
 
+let throttle = require('lodash.throttle');
+
 const onPlay = function (data) {
     // data is an object containing properties specific to that event
     //  console.log('played the video!')
@@ -13,7 +15,7 @@ const onPlay = function (data) {
     
 };
 
-player.on('timeupdate', onPlay);
+player.on('timeupdate', throttle(onPlay, wait = 1000));
 
  const savedTimeVideo = localStorage.getItem("videoplayer-current-time")
 // console.log(savedTimeVideo);
