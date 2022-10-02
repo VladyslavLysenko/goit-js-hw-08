@@ -3,14 +3,14 @@ let throttle = require('lodash.throttle');
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-const onPlay = function (data) {
-    // console.log(data.seconds);
-    let savedTimeJSON = JSON.stringify(data.seconds)
-    // console.log(savedTimeJSON);
+// const onPlay = function (data) {
+//     // console.log(data.seconds);
+//     let savedTimeJSON = JSON.stringify(data.seconds)
+//     // console.log(savedTimeJSON);
 
-    localStorage.setItem("videoplayer-current-time", savedTimeJSON)
-    // data is an object containing properties specific to that event
-};
+//     localStorage.setItem("videoplayer-current-time", savedTimeJSON)
+//     // data is an object containing properties specific to that event
+// };
 
 // player.on('timeupdate', throttle(onPlay, wait = 1000));
 player.on(
